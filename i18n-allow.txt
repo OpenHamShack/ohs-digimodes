@@ -1,0 +1,4 @@
+# Reasoned exceptions to shack-i18n-check: literals at a user-visible sink
+# that are not language, one per line:   glob | "literal" | reason
+# A reason is required and an entry that matches nothing fails the check.
+# None today.

@@ -1,0 +1,41 @@
+# The store form of OpenHamShack Digital Modes: the app server in a
+# container (REPO-LAYOUT 4.1), staged beside this file by tools/build-store.sh.
+#
+# python3-aiohttp from Debian rather than pip, as the family's other radio
+# modules do: it is the only dependency, the distribution patches it, and a
+# module that pulls from an index at build time stops building the day the
+# index moves. Nothing is fetched at runtime and nothing external is served.
+
+FROM docker.io/library/debian:13-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        python3 \
+        python3-aiohttp \
+    && rm -rf /var/lib/apt/lists/*
+
+# The shared OpenHamShack libraries and ohsdigi, exactly the wheels pinned in
+# tools/vendor/requirements.lock, hash-checked before unpacking (the image
+# has no pip). The import after it fails the build if one did not land, and
+# the decoder is made to encode and decode one message, so an image whose
+# native decoder does not load on this architecture never ships.
+COPY tools/vendor/ /tmp/vendor/
+RUN python3 /tmp/vendor/install.py \
+    && python3 -c "import shack_client, shack_pad, shack_bandplan, ohsdigi; shack_bandplan.load(); \
+a = ohsdigi.encode_audio('ft8', 'CQ GM4BRI IO75'); \
+import array; f = array.array('f'); f.frombytes(a); \
+s = array.array('h', [0]*6000 + [int(x*8000) for x in f]); \
+assert [d['message'] for d in ohsdigi.decode('ft8', s)] == ['CQ GM4BRI IO75']" \
+    && rm -rf /tmp/vendor
+
+COPY app/ /opt/digimodes/app/
+COPY store/pad-actions.json store/pad-layout.json /opt/digimodes/store/
+COPY LICENSE /opt/digimodes/LICENSE
+COPY entrypoint.sh /opt/digimodes/entrypoint.sh
+RUN chmod 0755 /opt/digimodes/entrypoint.sh
+
+# Platform mode: the controller signs people in and owns the station
+# profile (app/platform.py). Set in the image because it is what this image
+# is, not a setting anybody could change.
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1 SHACK_PLATFORM=dock360 DIGIMODES_DATA_DIR=/data
+EXPOSE 8080
+ENTRYPOINT ["/opt/digimodes/entrypoint.sh"]

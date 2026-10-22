@@ -1,0 +1,43 @@
+{
+  "app": {"title": "OpenHamShack Digital Modes"},
+  "ctl": {
+    "mode": "Mode", "dial": "Dial", "settings": "Settings", "rxHz": "RX Hz", "txHz": "TX Hz",
+    "txToRx": "TX = RX", "cq": "Call CQ", "enable": "Enable TX", "enabled": "TX enabled", "halt": "Halt TX"
+  },
+  "pane": {"band": "Band activity", "rx": "RX frequency", "rxAt": "({hz} Hz)"},
+  "col": {"utc": "UTC", "db": "dB", "dt": "DT", "freq": "Freq", "message": "Message"},
+  "src": {
+    "radio": "Radio app", "soundcard": "Sound card", "wav": "Recording", "none": "No audio",
+    "error": "Audio: {why}", "withState": "{source}: {state}", "noDecoder": "The decoder is not available: {why}"
+  },
+  "srcState": {"connecting": "connecting", "stopped": "stopped", "ended": "ended", "none": "choose a source in Settings",
+               "receiving": "receiving", "error": "error"},
+  "tx": {
+    "idle": "Receiving", "armed": "TX enabled", "sending": "Transmitting: {message}",
+    "contact": "Working {call} ({grid}), sent {sent}, received {rcvd}",
+    "slot": "Tx{n} {text}", "refusal": "Not transmitting: {why}",
+    "stopped": {"watchdog": "Stopped: TX watchdog", "noreply": "Stopped: no reply"}
+  },
+  "dial": {"row": "{band} {mhz}", "rowRx": "{band} {mhz} (receive only)", "other": "{mhz}"},
+  "log": {
+    "title": "Log this contact", "call": "Call", "grid": "Grid", "sent": "Sent", "rcvd": "Rcvd",
+    "comment": "Comment", "save": "Log QSO", "dismiss": "Do not log", "recent": "Recent contacts",
+    "done": "{call} is in the logbook."
+  },
+  "set": {
+    "audio": "Receive audio", "radio": "From a radio app", "radioUrl": "Radio app address",
+    "soundcard": "From a sound card (receive only)", "none": "None", "station": "Station",
+    "callsign": "Callsign", "locator": "Locator", "country": "Country (ISO code)", "licence": "Licence class",
+    "cancel": "Cancel", "save": "Save", "defaultInput": "Default input",
+    "stationLocal": "Shared by every OpenHamShack app on this computer, and synced with a controller when paired.",
+    "stationController": "This station's profile is the controller's; change it there.",
+    "txOn": "Transmitting is allowed by this app's settings, through the radio app's lease.",
+    "allowTx": "Allow transmitting (through a radio app's lease only)",
+    "txOff": "Transmitting is switched off in this app's settings (Allow transmitting)."
+  },
+  "msg": {"http": "The app answered HTTP {code}"},
+  "pad": {
+    "band": "Band", "band_next": "Next band", "mode_next": "FT8 / FT4", "tune": "RX frequency",
+    "tx_to_rx": "TX frequency to RX", "halt": "Halt TX", "log": "Log the finished contact"
+  }
+}

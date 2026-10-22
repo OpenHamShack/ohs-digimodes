@@ -1,0 +1,55 @@
+/* OpenHamShack Digital Modes. No external assets: system fonts only. */
+:root {
+  --bg: #12161c; --panel: #1b2129; --line: #2c3540; --ink: #e6ebf0; --dim: #93a1b0;
+  --cq: #2f6f3e; --me: #8a2f2f; --tx: #b35a00; --accent: #3d8bd9;
+}
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+body { margin: 0; background: var(--bg); color: var(--ink);
+       font: 14px/1.35 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+.bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 8px 12px;
+       background: var(--panel); border-bottom: 1px solid var(--line); }
+.bar h1 { font-size: 16px; margin: 0 12px 0 0; }
+.clock { display: flex; align-items: center; gap: 8px; font-variant-numeric: tabular-nums; }
+.slot { width: 120px; height: 8px; background: var(--line); border-radius: 4px; overflow: hidden; }
+#slotbar { height: 100%; width: 0; background: var(--accent); }
+#slotbar.odd { background: #9b7ad1; }
+.pill { padding: 2px 8px; border-radius: 10px; background: var(--line); color: var(--dim); }
+.pill.ok { background: #1f4d2c; color: var(--ink); }
+.pill.bad { background: var(--me); color: var(--ink); }
+.pill.onair { background: var(--tx); color: #fff; font-weight: 600; }
+main { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 8px; }
+@media (max-width: 800px) { main { grid-template-columns: 1fr; } }
+.pane { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; min-height: 240px;
+        max-height: 46vh; overflow: auto; }
+.pane h2, .pending h2, .logbook h2 { font-size: 13px; margin: 0; padding: 6px 8px; color: var(--dim);
+        position: sticky; top: 0; background: var(--panel); }
+table { width: 100%; border-collapse: collapse; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 13px; }
+th { text-align: left; color: var(--dim); font-weight: normal; padding: 2px 6px; }
+td { padding: 1px 6px; white-space: nowrap; }
+tr.cq td { background: var(--cq); }
+tr.me td { background: var(--me); }
+tr.sep td { border-top: 1px dashed var(--line); padding: 0; height: 2px; }
+tbody tr[data-id] { cursor: pointer; }
+tbody tr[data-id]:hover td { outline: 1px solid var(--accent); }
+.controls, .pending, .logbook { margin: 0 8px 8px; padding: 8px; background: var(--panel);
+        border: 1px solid var(--line); border-radius: 6px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.group { display: flex; gap: 8px; align-items: center; }
+input, select, button { background: #0e1217; color: var(--ink); border: 1px solid var(--line); border-radius: 4px;
+        padding: 4px 8px; font: inherit; }
+input[type=number] { width: 80px; }
+button { cursor: pointer; }
+button:disabled { opacity: 0.45; cursor: not-allowed; }
+button.on { background: var(--tx); color: #fff; }
+button.halt { border-color: var(--me); }
+.txlist { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px;
+          font-family: ui-monospace, Menlo, Consolas, monospace; }
+.txlist li { padding: 2px 6px; border: 1px solid var(--line); border-radius: 4px; color: var(--dim); }
+.txlist li.next { border-color: var(--tx); color: var(--ink); }
+.refusal { color: #f0a0a0; margin: 0; flex-basis: 100%; }
+.message { margin: 0 8px 8px; color: var(--dim); min-height: 1.2em; }
+.note { color: var(--dim); }
+dialog { background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; max-width: 560px; }
+dialog label { display: block; margin: 6px 0; }
+dialog .indent { margin-left: 24px; }
+menu { display: flex; justify-content: flex-end; gap: 8px; padding: 0; }

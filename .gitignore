@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+/desktop/stage-src/
+/.pytest_cache/

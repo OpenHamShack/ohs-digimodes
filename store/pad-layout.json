@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "ajazz-akp03e": {
+    "K1": {"press": "halt"},
+    "K2": {"press": "log"},
+    "K3": {"press": "tx-to-rx"},
+    "K4": {"press": "mode:next"},
+    "K5": {"press": "band:next"},
+    "K6": {"press": "none"},
+    "B1": {"press": "none"},
+    "B2": {"press": "none"},
+    "B3": {"press": "app:next"},
+    "D1": {"press": "none", "turn": "none-turn"},
+    "D2": {"press": "tx-to-rx", "turn": "tune"},
+    "D3": {"press": "band:next", "turn": "band"}
+  },
+  "keypad": {
+    "KPENTER": {"press": "log"},
+    "KP0": {"press": "halt"},
+    "KPPLUS": {"press": "tune:up"},
+    "KPMINUS": {"press": "tune:down"},
+    "KP1": {"press": "band:down"},
+    "KP3": {"press": "band:up"},
+    "KPSLASH": {"press": "mode:next"},
+    "KPDOT": {"press": "tx-to-rx"}
+  }
+}

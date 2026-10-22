@@ -1,0 +1,53 @@
+# OpenHamShack Digital Modes' desktop form, for the shared packaging kit
+# (~/ohs-libs/packaging/README.md): a .deb and an AppImage for Linux and an
+# Inno Setup .exe for Windows, all running the same server as the store
+# image, in its own window (app/desktop.py). No macOS form for the beta.
+#
+# Built by tools/build-desktop.sh, which first assembles stage-src/ (app/
+# with its pad declarations inside it, and the pinned libraries from
+# tools/vendor/ unpacked beside it: ohsdigi for Linux x86_64 and Windows,
+# each interpreter importing its own extension module).
+
+[app]
+id = "com.openhamshack.digimodes"       # REPO-LAYOUT 5
+kind = "digimodes"
+name = "OpenHamShack Digital Modes"
+summary = "FT8 and FT4 with any radio app or a sound card"
+description = """
+FT8 and FT4 on ohsdigi, OpenHamShack's own decoder. Listen to a radio app
+on this computer or the network (OpenHamShack Icom, Flex, QO-100 NB,
+Radio), or to a sound card, and see band activity and the RX frequency
+list as in WSJT-X. Call CQ or reply, with WSJT-X's basic sequence, and log
+finished contacts to the station's shared logbook.
+
+Transmitting goes through the radio app's transmit lease only, needs a
+callsign and a licence in the station profile that covers the signal, and
+is off until switched on. A sound card is receive only.
+"""
+executable = "shack-digimodes"          # REPO-LAYOUT 5
+version = { file = "stage-src/VERSION" }
+entry = "app.desktop:main"
+icon = "digital-modes"
+categories = ["HamRadio", "Network"]
+keywords = ["OpenHamShack", "FT8", "FT4", "WSJT-X", "digital modes", "amateur radio"]
+license_file = "../LICENSE"
+
+[python]
+paths = ["stage-src"]
+# Bundled into the frozen builds (AppImage, Windows): the window, the server,
+# and the sound card (the pip wheel carries PortAudio on Windows).
+requirements = ["pywebview==6.2.1", "aiohttp==3.12.15", "sounddevice==0.5.6"]
+
+[linux]
+# The .deb runs on the system's Python: aiohttp and cffi from Debian, the
+# sound card through the system's PortAudio. ohsdigi's extension module is
+# x86_64 (the pinned wheel), so the .deb, though Architecture: all by the
+# kit's design, decodes on x86_64 only; elsewhere the page says the decoder
+# is missing.
+depends = ["python3 (>= 3.11)", "python3-aiohttp", "python3-cffi", "libportaudio2"]
+recommends = ["python3-gi", "gir1.2-gtk-3.0", "gir1.2-webkit2-4.1"]
+vendor = ["pywebview==6.2.1"]
+
+[windows]
+# Inno Setup's AppId: made once (09/10/2026), never changed.
+app_guid = "{2C8F866B-C8BC-4C1B-B200-982F86E389EE}"

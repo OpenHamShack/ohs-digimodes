@@ -1,0 +1,13 @@
+{
+  "schema": 1,
+  "app": "digimodes",
+  "actions": [
+    {"id": "band", "kind": "turn", "label": "pad.band", "group": "receive", "short": ["BAND", ""]},
+    {"id": "band:next", "kind": "press", "label": "pad.band_next", "group": "receive", "short": ["BAND", "next"]},
+    {"id": "mode:next", "kind": "press", "label": "pad.mode_next", "group": "receive", "short": ["MODE", "next"]},
+    {"id": "tune", "kind": "turn", "label": "pad.tune", "group": "receive", "short": ["RX", "Hz"], "icon": "tune"},
+    {"id": "tx-to-rx", "kind": "press", "label": "pad.tx_to_rx", "group": "receive", "short": ["TX", "=RX"]},
+    {"id": "halt", "kind": "press", "label": "pad.halt", "group": "transmit", "short": ["HALT", "TX"]},
+    {"id": "log", "kind": "press", "label": "pad.log", "group": "other", "short": ["LOG", "QSO"]}
+  ]
+}

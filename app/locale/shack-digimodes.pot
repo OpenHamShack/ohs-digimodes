@@ -1,0 +1,190 @@
+# English template for the shack-digimodes domain. Written by tools/i18n.py extract; do not edit.
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: shack-digimodes\n"
+
+#: app/pad.py
+msgid "BAND"
+msgstr ""
+
+#: app/platform.py
+msgid "Control"
+msgstr ""
+
+#: app/pad.py
+msgid "HALT"
+msgstr ""
+
+#: app/pad.py
+msgid "LOG"
+msgstr ""
+
+#: app/pad.py
+msgid "MODE"
+msgstr ""
+
+#: app/pad.py
+msgid "ON AIR"
+msgstr ""
+
+#: app/pad.py
+msgid "RX Hz"
+msgstr ""
+
+#: app/pad.py
+msgid "TX Hz"
+msgstr ""
+
+#: app/main.py
+msgid "This app is reached through the OpenHamShack controller."
+msgstr ""
+
+#: app/platform.py
+msgid "This needs the {needs} level; your level for Digital Modes is {level}."
+msgstr ""
+
+#: app/platform.py
+msgid "Transmit"
+msgstr ""
+
+#: app/platform.py
+msgid "View"
+msgstr ""
+
+#: app/main.py
+msgid "a sound card is a source in the desktop app only"
+msgstr ""
+
+#: app/audio.py
+msgid "default input"
+msgstr ""
+
+#: app/pad.py
+msgid "next"
+msgstr ""
+
+#: app/main.py
+msgid "no callsign is set in the station profile"
+msgstr ""
+
+#: app/station.py
+msgid "no callsign is set in the station profile, and an unidentified transmission is not something this station makes"
+msgstr ""
+
+#: app/station.py
+msgid "no dial frequency is chosen"
+msgstr ""
+
+#: app/audio.py
+msgid "only 16-bit WAV files can be read"
+msgstr ""
+
+#: app/tx.py
+msgid "only a radio app can transmit: a sound card or a file is receive only here"
+msgstr ""
+
+#: app/main.py
+msgid "that contact is already finished"
+msgstr ""
+
+#: app/main.py
+msgid "that decode is no longer in the list"
+msgstr ""
+
+#: app/main.py
+msgid "that message is not a CQ or a call to this station"
+msgstr ""
+
+#: app/tx.py
+msgid "the FT8/FT4 encoder is not available on this machine"
+msgstr ""
+
+#: app/station.py
+msgid "the band-plan dataset is missing, so nothing can be checked"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app at {url} did not answer ({why})"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app did not key (HTTP {code})"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app ended the lease"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app has no transmit lease (tx.remote), so it is not keyed from here"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app sent no audio format"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app sent no transmit audio format"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app's audio is not 16-bit mono PCM"
+msgstr ""
+
+#: app/radioapp.py
+msgid "the radio app's status answered HTTP {code}"
+msgstr ""
+
+#: app/station.py
+msgid "the station profile belongs to the controller; change it there"
+msgstr ""
+
+#: app/station.py
+msgid "the station store could not be opened: {why}"
+msgstr ""
+
+#: app/station.py
+msgid "the station's licence does not allow this transmission"
+msgstr ""
+
+#: app/tx.py
+msgid "the transmission ran past the end of its slot and was stopped"
+msgstr ""
+
+#: app/main.py
+msgid "there is no finished contact to log"
+msgstr ""
+
+#: app/pad.py
+msgid "there is no frequency list for this mode"
+msgstr ""
+
+#: app/main.py
+msgid "there is nothing to send: call CQ or reply to a decode first"
+msgstr ""
+
+#: app/tx.py
+msgid "too late in the slot to transmit"
+msgstr ""
+
+#: app/tx.py
+msgid "transmitting is switched off in this app's settings (Allow transmitting)"
+msgstr ""
+
+#: app/pad.py
+msgid "{action} is a {kind}"
+msgstr ""
+
+#: app/pad.py
+msgid "{action} is not one of this app's pad actions"
+msgstr ""
+
+#: app/tx.py
+msgid "{message} cannot be sent as written: it would go out as {sent}"
+msgstr ""
+
+#: app/tx.py
+msgid "{message} cannot be sent: {why}"
+msgstr ""

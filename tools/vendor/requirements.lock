@@ -1,0 +1,30 @@
+# The shared OpenHamShack libraries Digital Modes pins (REPO-LAYOUT 4):
+# exact versions and hashes, installed only from this folder by
+# tools/vendor/install.py (the image, a development venv, the desktop stage).
+#
+# shack-client, shack-bandplan, shack-pad and shack-desktop were the wheel
+# files OpenHamShack Flex and WB also pinned, byte-identical, before the
+# family rename of 21/10/2026 (git filter-repo rewrote the old product
+# name throughout ohs-libs' source, which changed their built bytes too -
+# builds are not byte-reproducible across a source change any more than
+# across a rebuild). Rebuilt from ohs-libs rename/fixup with its
+# own tools/build.sh; whoever rebuilds Flex and WB's pins needs this same
+# ohs-libs revision for the four to match again.
+#
+# ohs-ohsdigi is the one decoder (D9, BETA-PLAN decision 3): 0.2.0, which
+# adds JS8 and Q65 to FT8/FT4 (this app still offers FT8/FT4 only), built in
+# ~/openhamshack-nb (rust/ohsdigi, tools/build-wheels.sh, at be8c102) and
+# copied from ~/build/ohsdigi-wheels; its SHA256SUMS list the same hashes. The
+# macOS wheel is not carried: there is no Mac form of this app for the beta.
+# shack-i18n is the string check's wheel (tools/i18n.py) and is not installed.
+shack-client==0.1.0 --hash=sha256:3a7c9985151ec2c4c2fba253eb4f83ada065cc112675b7bdf8ee4145c0683b32
+shack-bandplan==0.1.0 --hash=sha256:591a1cb85f3ecd64af5d5c5f198d9aa47696436c9ee72fa66b106c16c75cc44d
+shack-pad==0.1.0 --hash=sha256:682b9b3e69e371f9b146d7573589d94cbb2ea92d3ee7d156da4149326a156724
+shack-desktop==0.1.0 --hash=sha256:487b55cbe688d620eb7b4a3c8794226eb975630bd8e23ffee21e0ba2539ba0da
+ohs-ohsdigi==0.2.0 --hash=sha256:511da9b5a50acb328b4a56198382691ca9a920ae8ded575703522c79d3519485  # manylinux_2_35_x86_64
+ohs-ohsdigi==0.2.0 --hash=sha256:c0a2ab4eb0211028bfe217126c7749fd94187e4fdfb5b4173480557ca35e7d79  # manylinux_2_35_aarch64
+ohs-ohsdigi==0.2.0 --hash=sha256:a7f05b52f10289540cb09dc5fcc1f2f6cde42a4b0218918a830b41ee8585c3c4  # win_amd64
+# The desktop form's sound card only (install.py --desktop): pure Python over
+# the system's PortAudio (libportaudio2 on Debian; the frozen Windows build
+# bundles its own DLL through the pip wheel in shack-app.toml).
+sounddevice==0.5.6 --hash=sha256:de099612311ad81e55d31ccbd83f43ea6bf4d87b48f9b6ea55a1fbcde0eee4e0

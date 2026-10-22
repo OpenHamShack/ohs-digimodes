@@ -1,0 +1,110 @@
+{
+ "schema": 1,
+ "src": "WSJT-X 2.7.0 default frequency list (Region 1 entries; 432.174 and 1296.174 as the IARU R1 VHF plan's FT8 centres). Stands in until the shared dataset carries a digimodes presets entry: app/station.py.",
+ "entries": [
+  {
+   "mode": "ft8",
+   "dialHz": 1840000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 3573000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 5357000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 7074000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 10136000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 14074000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 18100000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 21074000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 24915000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 28074000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 50313000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 70154000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 144174000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 432174000
+  },
+  {
+   "mode": "ft8",
+   "dialHz": 1296174000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 3575000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 7047500
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 10140000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 14080000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 18104000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 21140000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 24919000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 28180000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 50318000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 144170000
+  },
+  {
+   "mode": "ft4",
+   "dialHz": 432070000
+  }
+ ]
+}

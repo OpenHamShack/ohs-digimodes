@@ -1,0 +1,20 @@
+# shack-i18n-check for OpenHamShack Digital Modes (openhamshack
+# docs/contract/I18N.md section 3). Run as the tests do:
+# python3 tools/i18n.py check. The baseline (i18n-pending.txt) is empty and
+# stays empty: this app was written against the catalogs from its first day.
+#
+# Excluded, with why:
+# - docs/**: notes, never served or shipped;
+# - tools/**, tests/**: developer tools and tests, read in English like log
+#   lines (I18N.md section 1 rule 8);
+# - desktop/stage-src/**: the desktop build's staging copy (gitignored).
+exclude = ["docs/**", "tools/**", "tests/**", "desktop/stage-src/**"]
+
+[python]
+# json_error(message, status) is how a route answers {"error": ...}; the
+# page shows the sentence as it came.
+sinks = ["json_error"]
+
+[javascript]
+# say(text) fills the page's message line.
+sinks = ["say("]

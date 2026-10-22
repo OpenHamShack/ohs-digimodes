@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="dark">
+<title data-i18n="app.title">OpenHamShack Digital Modes</title>
+<!--
+  Served under a path prefix on one address and at the root of a subdomain
+  on another, by the same process: this base is the only place that
+  difference is expressed, and every other URL on the page is relative.
+-->
+<base href="{{BASE}}">
+<link rel="stylesheet" href="static/app.css">
+<script src="static/shack-i18n.js"></script>
+</head>
+<body>
+<header class="bar">
+  <h1 data-i18n="app.title">OpenHamShack Digital Modes</h1>
+  <div class="clock"><span id="utc">--:--:--</span><div class="slot"><div id="slotbar"></div></div></div>
+  <label><span data-i18n="ctl.mode">Mode</span>
+    <select id="mode"><option value="ft8">FT8</option><option value="ft4">FT4</option></select></label>
+  <label><span data-i18n="ctl.dial">Dial</span> <select id="dial"></select></label>
+  <span id="source" class="pill" data-i18n="src.none">No audio</span>
+  <button id="settingsBtn" type="button" data-i18n="ctl.settings">Settings</button>
+</header>
+
+<main>
+  <section class="pane">
+    <h2 data-i18n="pane.band">Band activity</h2>
+    <table class="decodes"><thead><tr>
+      <th data-i18n="col.utc">UTC</th><th data-i18n="col.db">dB</th><th data-i18n="col.dt">DT</th>
+      <th data-i18n="col.freq">Freq</th><th data-i18n="col.message">Message</th></tr></thead>
+      <tbody id="band"></tbody></table>
+  </section>
+  <section class="pane">
+    <h2><span data-i18n="pane.rx">RX frequency</span> <span id="rxlabel"></span></h2>
+    <table class="decodes"><thead><tr>
+      <th data-i18n="col.utc">UTC</th><th data-i18n="col.db">dB</th><th data-i18n="col.dt">DT</th>
+      <th data-i18n="col.freq">Freq</th><th data-i18n="col.message">Message</th></tr></thead>
+      <tbody id="rx"></tbody></table>
+  </section>
+</main>
+
+<section class="controls">
+  <div class="group">
+    <label><span data-i18n="ctl.rxHz">RX Hz</span> <input id="rxHz" type="number" min="200" max="3000" step="10"></label>
+    <label><span data-i18n="ctl.txHz">TX Hz</span> <input id="txHz" type="number" min="200" max="3000" step="10"></label>
+    <button id="txToRx" type="button" data-i18n="ctl.txToRx">TX = RX</button>
+  </div>
+  <div class="group">
+    <button id="cq" type="button" data-i18n="ctl.cq">Call CQ</button>
+    <button id="enable" type="button" data-i18n="ctl.enable">Enable TX</button>
+    <button id="halt" type="button" class="halt" data-i18n="ctl.halt">Halt TX</button>
+  </div>
+  <div class="group">
+    <span id="txstate" class="pill" data-i18n="tx.idle">Receiving</span>
+    <span id="contact"></span>
+  </div>
+  <ol id="txlist" class="txlist"></ol>
+  <p id="refusal" class="refusal" hidden></p>
+</section>
+
+<section id="pending" class="pending" hidden>
+  <h2 data-i18n="log.title">Log this contact</h2>
+  <label><span data-i18n="log.call">Call</span> <input id="pCall"></label>
+  <label><span data-i18n="log.grid">Grid</span> <input id="pGrid" size="6"></label>
+  <label><span data-i18n="log.sent">Sent</span> <input id="pSent" size="4"></label>
+  <label><span data-i18n="log.rcvd">Rcvd</span> <input id="pRcvd" size="4"></label>
+  <label><span data-i18n="log.comment">Comment</span> <input id="pComment"></label>
+  <button id="logBtn" type="button" data-i18n="log.save">Log QSO</button>
+  <button id="dismissBtn" type="button" data-i18n="log.dismiss">Do not log</button>
+</section>
+
+<section class="logbook">
+  <h2 data-i18n="log.recent">Recent contacts</h2>
+  <table><tbody id="qsos"></tbody></table>
+</section>
+
+<p id="message" class="message" role="status"></p>
+
+<dialog id="settings">
+  <form method="dialog" id="settingsForm">
+    <h2 data-i18n="set.audio">Receive audio</h2>
+    <label><input type="radio" name="source" value="radio"> <span data-i18n="set.radio">From a radio app</span></label>
+    <label class="indent"><span data-i18n="set.radioUrl">Radio app address</span> <input id="radioUrl" size="40"></label>
+    <label id="scRow"><input type="radio" name="source" value="soundcard"> <span data-i18n="set.soundcard">From a sound card (receive only)</span>
+      <select id="soundDevice"></select></label>
+    <label><input type="radio" name="source" value="none"> <span data-i18n="set.none">None</span></label>
+    <h2 data-i18n="set.station">Station</h2>
+    <p id="stationNote" class="note"></p>
+    <label><span data-i18n="set.callsign">Callsign</span> <input id="callsign" size="10"></label>
+    <label><span data-i18n="set.locator">Locator</span> <input id="locator" size="8"></label>
+    <label><span data-i18n="set.country">Country (ISO code)</span> <input id="country" size="3"></label>
+    <label><span data-i18n="set.licence">Licence class</span> <input id="licence" size="12"></label>
+    <p id="txSwitch" class="note"></p>
+    <label id="txAllowRow"><input type="checkbox" id="allowTx"> <span data-i18n="set.allowTx">Allow transmitting (through a radio app's lease only)</span></label>
+    <menu>
+      <button value="cancel" data-i18n="set.cancel">Cancel</button>
+      <button id="saveSettings" value="save" data-i18n="set.save">Save</button>
+    </menu>
+  </form>
+</dialog>
+
+<script src="static/app.js"></script>
+</body>
+</html>

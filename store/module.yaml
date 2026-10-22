@@ -1,0 +1,176 @@
+apiVersion: dock360/v1
+
+# The store form of OpenHamShack Digital Modes (REPO-LAYOUT 4.1): the same
+# server as the desktop form, in a container, on an OpenHamShack
+# controller. tools/build-store.sh stages the repository beside this file
+# and packages it signed, with its image (D12).
+id: shack-digimodes
+name: Digital Modes
+version: 0.1.0-beta.2
+summary: FT8 and FT4 with any radio app on the station - decodes, CQ and reply, and the shared logbook.
+description: >
+  OpenHamShack's FT8 and FT4, on ohsdigi, the family's one decoder. It owns
+  no radio: it listens to the receive audio of whichever app holds the rig
+  (Icom, Flex, QO-100 NB, Radio) and transmits through that app's transmit
+  lease, so the radio app's own checks and the controller's hardware
+  broker apply to every transmission.
+
+  Band activity and the RX frequency list as in WSJT-X, calling CQ and
+  replying with WSJT-X's basic sequence, decodes posted to the station's
+  spots, and finished contacts logged to the station's one logbook.
+  Transmitting needs the Transmit level, this app's transmit switch, a
+  callsign and a licence in the station profile that covers the signal,
+  and the radio app's own yes.
+category: radio
+icon: 📶
+author: OpenHamShack
+license: GPL-3.0-or-later
+homepage: https://openhamshack.com/
+
+openhamshack:
+  kind: digimodes
+  # It keys nothing of its own - every transmission is the radio app's,
+  # under that app's lease - but it starts transmissions, so the controller
+  # must treat it as an app that can: the starting routes need Transmit.
+  tx_capable: true
+  anonymous_view: false
+  # The allow-list design Icom settled: every write needs Transmit unless it
+  # is on the Control list below, so a route added later is closed to a TV
+  # until somebody decides otherwise. app/platform.py is the module's own
+  # copy of these rules (defence in depth).
+  default_write_level: transmit
+  levels:
+    - {path: "/api/cq", method: POST, level: transmit}
+    - {path: "/api/reply", method: POST, level: transmit}
+    - {path: "/api/tx", method: POST, level: transmit}
+    - {path: "/api/config", method: POST, level: control}
+    - {path: "/api/halt", method: POST, level: control}
+    - {path: "/api/log", method: POST, level: control}
+    - {path: "/api/log/dismiss", method: POST, level: control}
+    - {path: "/api/shack/pad/action", method: POST, level: control}
+  release_request: /api/shack/release
+  busy: /api/shack/busy
+  # No hardware of its own: the radio is the radio app's, claimed by it.
+  broker_devices: []
+  actions: pad-actions.json
+  controller_layout: pad-layout.json
+
+runtime:
+  build:
+    context: .
+    containerfile: Containerfile
+  # No user:, as Flex: rootless Podman maps container root to the dock360
+  # account that owns the data volume, so the volume is writable without a
+  # chown, and nothing here touches hardware. Every capability is dropped
+  # and the image is read-only, so root inside holds nothing.
+  read_only_rootfs: true
+  no_new_privileges: true
+  cap_drop:
+    - ALL
+  tmpfs:
+    - /tmp
+  # A transmission in progress is unkeyed on the way out (the radio app's
+  # lease would also end it within 5 s).
+  stop_timeout: 10
+
+web:
+  enabled: true
+  container_port: 8080
+  strip_prefix: true
+  websockets: false
+
+health:
+  # Whether this process serves, and nothing about the radio app: a radio
+  # app switched off must not roll back an update that was fine.
+  type: http
+  path: /healthz
+  interval: 30
+  timeout: 5
+  retries: 3
+  start_period: 15
+
+resources:
+  # ohsdigi at depth 2 takes about a tenth of a second of one core per FT8
+  # slot on an N150; the rest is a PCM stream of 24 kB/s.
+  memory_max: 384M
+  memory_high: 256M
+  cpu_quota: 200%
+  pids_max: 128
+
+volumes:
+  - name: data
+    container_path: /data
+    description: >
+      The operating settings (mode, dial, audio offsets, the radio app's
+      address), this app's replica of the station store, and the contacts
+      not yet accepted by the controller's logbook.
+    backup: true
+
+env:
+  - key: RADIO_URL
+    label: Radio app address
+    type: string
+    default: ""
+    help: >
+      The base address of the radio app whose audio this app listens to and
+      transmits through, for example http://100.69.206.70/shack-icom/. The
+      controller does not yet route audio between apps by itself, so the
+      address is given here. This seeds the setting; once one is saved on
+      the app's own settings page, that one is used.
+
+  - key: RADIO_TOKEN
+    label: Radio app token
+    type: password
+    secret: true
+    default: ""
+    help: >
+      A device token the radio app's front door accepts (paired for this
+      app, at the level it needs: Transmit to transmit, View to listen).
+      Leave empty when the radio app needs no sign-in.
+
+  - key: RADIO_PASSWORD
+    label: Radio app password
+    type: password
+    secret: true
+    default: ""
+    help: >
+      The radio app's own password, for a radio app reached directly rather
+      than through the controller (Icom's standalone sign-in).
+
+  - key: ALLOW_TRANSMIT
+    label: Allow transmitting
+    type: bool
+    default: false
+    help: >
+      Off by default, and with it off every call to transmit is refused here
+      before the radio app is asked - the page shows why. With it on, a
+      transmission also needs the Transmit level, a callsign and a licence
+      in the station profile that covers the signal, and the radio app's own
+      yes under its lease; the radio app checks its licence at its real
+      frequency again when it keys.
+
+  - key: DECODE_DEPTH
+    label: Decoding depth
+    type: select
+    default: "2"
+    options:
+      - "1"
+      - "2"
+      - "3"
+    help: >
+      WSJT-X's fast (1), normal (2) and deep (3). Deep finds the weakest
+      signals and takes the most processor time.
+
+  - key: LOG_LEVEL
+    label: Log level
+    type: select
+    default: INFO
+    options:
+      - DEBUG
+      - INFO
+      - WARNING
+      - ERROR
+
+backup:
+  # Small files written by rename onto themselves, and SQLite.
+  strategy: hot
